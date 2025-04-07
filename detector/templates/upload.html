@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI Face Shape Detector – Upload your photo and instantly find your face shape using our smart AI-powered face shape finder tool." />
+  <meta name="keywords" content="face shape detector, face shape finder, AI face shape app, detect face shape, face shape analysis" />
+  <meta name="author" content="FaceShape AI" />
+  <title>AI Face Shape Detector | Find Your Face Shape Instantly</title>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Animate on scroll -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- Icon CDN -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+      background: #6C63FF;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+    }
+
+    input[type="file"]::-webkit-file-upload-button:hover {
+      background: #584dd9;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-blue-100 text-gray-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="text-center py-10" data-aos="fade-down">
+    <h1 class="text-4xl font-extrabold text-indigo-600">AI Face Shape Detector</h1>
+    <p class="mt-4 text-lg text-gray-600">Discover your perfect face shape using our intelligent <strong>AI face shape finder</strong>.</p>
+  </header>
+
+  <!-- Upload Form Section -->
+  <main class="flex-grow flex justify-center items-center px-4 py-8">
+    <div class="bg-white shadow-xl rounded-xl p-10 w-full max-w-xl" data-aos="zoom-in">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Upload Your Selfie</h2>
+      <p class="text-sm text-gray-500 mb-6 text-center">Our <strong>face shape detector AI app</strong> instantly analyzes your photo to help you identify your unique face shape.</p>
+
+      <form method="post" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Select an image</label>
+          <input type="file" name="image" accept="image/*" required
+                 class="w-full border border-gray-300 rounded-md p-2 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-600" />
+        </div>
+      
+        <button type="submit"
+                class="w-full bg-indigo-600 text-white font-semibold py-2 rounded-md hover:bg-indigo-700 transition duration-200">
+          Detect Face Shape
+        </button>
+      </form>
+      
+      {% if image_url %}
+        <div class="mt-6 text-center">
+          <img src="{{ image_url }}" alt="Uploaded Image" class="max-w-full h-auto rounded-lg shadow-lg" />
+        </div>
+      {% endif %}
+      
+      {% if face_shape %}
+        <h2 class="mt-6 text-2xl font-bold text-center text-gray-800">Detected Face Shape: {{ face_shape }}</h2>
+        <div class="mt-4 text-center text-sm text-gray-600">
+            <h3 class="font-semibold text-lg">Suggested Glasses</h3>
+            <p>{{ glasses_suggestions }}</p>
+            
+            <h3 class="font-semibold text-lg">Facial Measurements</h3>
+            <p><strong>Jaw Width:</strong> {{ measurements.jaw_width }} pixels</p>
+            <p><strong>Jaw Height:</strong> {{ measurements.jaw_height }} pixels</p>
+            <p><strong>Left Cheek Distance:</strong> {{ measurements.left_cheek_distance }} pixels</p>
+            <p><strong>Right Cheek Distance:</strong> {{ measurements.right_cheek_distance }} pixels</p>
+            <p><strong>Forehead Width:</strong> {{ measurements.forehead_width }} pixels</p>
+        </div>
+
+        {% if gender %}
+            <div class="mt-4 text-center text-sm text-gray-600">
+            <h3 class="font-semibold text-lg">Detected Gender</h3>
+            <p>Based on your image, we detected that your gender is: <strong>{{ gender }}</strong></p>
+            </div>
+        {% endif %}
+        
+        {% if age %}
+          <div class="mt-4 text-center text-sm text-gray-600">
+              <h3 class="font-semibold text-lg">Estimated Age: </h3>
+              <p><strong>{{ age }}</strong></p>
+          </div>
+        {% endif %}
+        
+        {% if emotion %}
+          <div class="mt-4 text-center text-sm text-gray-600">
+              <h3 class="font-semibold text-lg">Dominant Emotion: </h3>
+              <p><strong>{{ emotion }}</strong></p>
+          </div>
+        {% endif %}
+        
+        {% if race %}
+          <div class="mt-4 text-center text-sm text-gray-600">
+              <h3 class="font-semibold text-lg">Dominant Race: </h3>
+              <p><strong>{{ race }}</strong></p>
+          </div>
+        {% endif %}
+        
+      {% endif %}
+      
+      <div class="mt-6 text-center text-sm text-gray-400">
+        Powered by AI · Secure Uploads · Fast Detection
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white text-center text-sm text-gray-500 py-6 shadow-inner" data-aos="fade-up">
+    &copy; 2025 FaceShape AI – All rights reserved.
+  </footer>
+
+  <!-- Feather Icons Init -->
+  <script>feather.replace();</script>
+  <!-- AOS Init -->
+  <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>
