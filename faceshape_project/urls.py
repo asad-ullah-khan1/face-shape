@@ -6,8 +6,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('face-detector', include('detector.urls')),
-    path('', views.main_index, name="landing"),
+    path('', include('detector.urls')),
 ]
 
 if settings.DEBUG:

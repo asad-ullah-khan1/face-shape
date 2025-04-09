@@ -109,7 +109,6 @@ def upload_image(request):
         'glasses_suggestions': glasses_suggestions.get(face_shape, "Try different styles!")
     })
 
-def api_view(request):
     face_shape = None
     image_url = None
     measurements = {}
